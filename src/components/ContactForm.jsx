@@ -1,32 +1,97 @@
 import React, { useState } from 'react';
 
-const ContactForm = ({ onSubmit }) => {
-  const [formData, setFormData] = useState({ nome: '', email: '', telefone: '' });
+const ContactForm = ({ contact = {}, onSubmit }) => {
+  const [formData, setFormData] = useState({
+    nome: contact.nome || '',
+    email: contact.email || '',
+    telefone: contact.telefone || '',
+  });
+
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === 'telefone') {
+      setFormData({ ...formData, telefone: formatPhone(value) });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const formatPhone = (value) => {
+    // Remove tudo que não for número
+    const onlyNums = value.replace(/\D/g, '');
+
+    if (onlyNums.length <= 10) {
+      // Telefone fixo (8 dígitos)
+      return onlyNums
+        .replace(/^(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{4})(\d)/, '$1-$2');
+    } else {
+      // Celular (9 dígitos)
+      return onlyNums
+        .replace(/^(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{1})(\d{4})(\d)/, '$1 $2-$3');
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    const newErrors = {};
+    if (!formData.nome) newErrors.nome = 'Nome é obrigatório';
+    if (!formData.email) newErrors.email = 'Email é obrigatório';
+    if (!formData.telefone) newErrors.telefone = 'Telefone é obrigatório';
+
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      onSubmit(formData);
+    }
   };
 
   return (
-    <form role="form" onSubmit={handleSubmit}>
-      <label>
-        Nome
-        <input type="text" name="nome" value={formData.nome} onChange={handleChange} />
-      </label>
-      <label>
-        Email
-        <input type="email" name="email" value={formData.email} onChange={handleChange} />
-      </label>
-      <label>
-        Telefone
-        <input type="tel" name="telefone" value={formData.telefone} onChange={handleChange} />
-      </label>
-      <button type="submit">Salvar</button>
+    <form role="form" onSubmit={handleSubmit} className="container p-3 border rounded bg-light">
+      <div className="mb-3">
+        <label htmlFor="nome" className="form-label">Nome</label>
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          value={formData.nome}
+          onChange={handleChange}
+          className={`form-control ${errors.nome ? 'is-invalid' : ''}`}
+        />
+        {errors.nome && <div className="invalid-feedback">{errors.nome}</div>}
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+        />
+        {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="telefone" className="form-label">Telefone</label>
+        <input
+          type="tel"
+          id="telefone"
+          name="telefone"
+          value={formData.telefone}
+          onChange={handleChange}
+          maxLength="15"
+          className={`form-control ${errors.telefone ? 'is-invalid' : ''}`}
+        />
+        {errors.telefone && <div className="invalid-feedback">{errors.telefone}</div>}
+      </div>
+
+      <button type="submit" className="btn btn-primary">Salvar</button>
     </form>
   );
 };

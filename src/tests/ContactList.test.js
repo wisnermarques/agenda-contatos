@@ -1,6 +1,6 @@
-// ContactList.test.js
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import ContactList from '../components/ContactList';
+import ContactForm from '../components/ContactForm';
 import * as service from '../services/contactService';
 
 jest.mock('../services/contactService');
@@ -30,15 +30,11 @@ test('exibe lista de contatos', async () => {
 });
 
 test('deleta um contato ao clicar em "Remover"', async () => {
-  const mockContacts = [
+  const deleteContactMock = jest.fn();
+  service.getContacts.mockResolvedValue([
     { id: '1', nome: 'Ana', email: 'ana@email.com', telefone: '123' },
-  ];
-  
-  service.getContacts.mockResolvedValue(mockContacts);
-  service.deleteContact.mockImplementation((id) => {
-    mockContacts.splice(0, 1); // Remove o contato
-    return Promise.resolve();
-  });
+  ]);
+  service.deleteContact = deleteContactMock;
 
   render(<ContactList />);
 
@@ -49,7 +45,29 @@ test('deleta um contato ao clicar em "Remover"', async () => {
   fireEvent.click(screen.getByText(/remover/i));
 
   await waitFor(() => {
-    expect(service.deleteContact).toHaveBeenCalledWith('1');
+    expect(deleteContactMock).toHaveBeenCalledWith('1');
     expect(screen.queryByText('Ana')).not.toBeInTheDocument();
+  });
+
+});
+
+
+test('atualiza contato existente', () => {
+  const handleSubmit = jest.fn();
+  const contatoExistente = {
+    nome: 'Ana',
+    email: 'ana@email.com',
+    telefone: '123',
+  };
+
+  render(<ContactForm contact={contatoExistente} onSubmit={handleSubmit} />);
+
+  fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'Ana Paula' } });
+  fireEvent.submit(screen.getByRole('form'));
+
+  expect(handleSubmit).toHaveBeenCalledWith({
+    nome: 'Ana Paula',
+    email: 'ana@email.com',
+    telefone: '123',
   });
 });

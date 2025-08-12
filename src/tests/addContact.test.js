@@ -1,7 +1,6 @@
 import { addContact } from '../services/contactService';
 import { supabase } from '../services/supabase';
 
-
 // Mock do Supabase
 jest.mock('../services/supabase', () => ({
   supabase: {

@@ -1,7 +1,7 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import ContactList from '../components/ContactList';
-import ContactForm from '../components/ContactForm';
 import * as service from '../services/contactService';
+import ContactList from '../components/contacts/ContactList/ContactList';
+import ContactForm from '../components/contacts/ContactForm/ContactForm';
 
 jest.mock('../services/contactService');
 

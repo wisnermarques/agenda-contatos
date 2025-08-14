@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { formatPhone } from '../../../utils/formatPhone';
 
 const ContactForm = ({ contact = {}, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -19,23 +20,6 @@ const ContactForm = ({ contact = {}, onSubmit }) => {
     }
   };
 
-  const formatPhone = (value) => {
-    // Remove tudo que não for número
-    const onlyNums = value.replace(/\D/g, '');
-
-    if (onlyNums.length <= 10) {
-      // Telefone fixo (8 dígitos)
-      return onlyNums
-        .replace(/^(\d{2})(\d)/, '($1) $2')
-        .replace(/(\d{4})(\d)/, '$1-$2');
-    } else {
-      // Celular (9 dígitos)
-      return onlyNums
-        .replace(/^(\d{2})(\d)/, '($1) $2')
-        .replace(/(\d{1})(\d{4})(\d)/, '$1 $2-$3');
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
@@ -50,7 +34,7 @@ const ContactForm = ({ contact = {}, onSubmit }) => {
   };
 
   return (
-    <form role="form" onSubmit={handleSubmit} className="container p-3 border rounded bg-light">
+    <form role="form" onSubmit={handleSubmit} className="container p-3 border rounded">
       <div className="mb-3">
         <label htmlFor="nome" className="form-label">Nome</label>
         <input
@@ -91,7 +75,7 @@ const ContactForm = ({ contact = {}, onSubmit }) => {
         {errors.telefone && <div className="invalid-feedback">{errors.telefone}</div>}
       </div>
 
-      <button type="submit" className="btn btn-primary">Salvar</button>
+      <button type="submit" className="btn btn-dark w-100">Salvar</button>
     </form>
   );
 };

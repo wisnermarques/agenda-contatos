@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import ContactForm from '../components/ContactForm';
+import ContactForm from '../components/contacts/ContactForm/ContactForm';
+
 
 test('renderiza inputs de nome, email e telefone', () => {
   render(<ContactForm />);

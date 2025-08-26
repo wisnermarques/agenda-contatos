@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import ContactForm from '../components/contacts/ContactForm/ContactForm';
 
-
 test('renderiza inputs de nome, email e telefone', () => {
   render(<ContactForm />);
 
@@ -12,6 +11,7 @@ test('renderiza inputs de nome, email e telefone', () => {
 
 test('chama onSubmit com dados corretos', () => {
   const handleSubmit = jest.fn();
+
   render(<ContactForm onSubmit={handleSubmit} />);
 
   fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'Ana' } });
@@ -49,6 +49,7 @@ test('atualiza contato existente', () => {
 
 test('valida que os campos obrigatórios foram preenchidos', () => {
   const handleSubmit = jest.fn();
+
   render(<ContactForm onSubmit={handleSubmit} />);
 
   fireEvent.submit(screen.getByRole('form'));

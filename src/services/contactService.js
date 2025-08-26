@@ -11,7 +11,7 @@ export const addContact = async (contact) => {
     ...contact,
     telefone: contact.telefone.replace(/\D/g, '') // remove tudo que não é número
   };
-  const { data, error } = await supabase.from('contatos').insert([formattedContact]); //.select para retornar dado inserido
+  const { data, error } = await supabase.from('contatos').insert([formattedContact]).select('*'); //.select para retornar dado inserido
   
   if (error) throw error;
   return data[0];

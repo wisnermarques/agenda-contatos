@@ -67,7 +67,7 @@ const ContactForm = ({ contact = {}, onSubmit }) => {
           type="tel"
           id="telefone"
           name="telefone"
-          value={formData.telefone}
+          value={formatPhone(formData.telefone)}
           onChange={handleChange}
           maxLength="15"
           className={`form-control ${errors.telefone ? 'is-invalid' : ''}`}

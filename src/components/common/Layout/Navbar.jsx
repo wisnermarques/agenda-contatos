@@ -8,44 +8,41 @@ const Navbar = () => {
           <i className="bi bi-journal-bookmark-fill me-2"></i>
           Gerenciador de Contatos
         </NavLink>
-        
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
+
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
-          aria-controls="navbarNav" 
-          aria-expanded="false" 
+          aria-controls="navbarNav"
+          aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        
+
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <NavLink 
-                className="nav-link" 
+              <NavLink
                 to="/"
-                activeclassname="active"
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
               >
                 <i className="bi bi-house-door me-1"></i> Home
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink 
-                className="nav-link" 
+              <NavLink
                 to="/contatos"
-                activeclassname="active"
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
               >
                 <i className="bi bi-list-ul me-1"></i> Contatos
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink 
-                className="nav-link" 
+              <NavLink
                 to="/novo"
-                activeclassname="active"
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
               >
                 <i className="bi bi-person-plus me-1"></i> Novo Contato
               </NavLink>

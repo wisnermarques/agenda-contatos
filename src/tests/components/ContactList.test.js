@@ -1,10 +1,10 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import * as service from '../services/contactService';
-import ContactList from '../components/contacts/ContactList/ContactList';
-import ContactForm from '../components/contacts/ContactForm/ContactForm';
+import * as service from '../../services/contactService';
+import ContactList from '../../components/contacts/ContactList/ContactList';
+import ContactForm from '../../components/contacts/ContactForm/ContactForm';
 import { MemoryRouter } from 'react-router-dom';
 
-jest.mock('../services/contactService');
+jest.mock('../../services/contactService');
 
 // Função auxiliar para renderizar com router
 const renderWithRouter = (ui) => render(<MemoryRouter>{ui}</MemoryRouter>);

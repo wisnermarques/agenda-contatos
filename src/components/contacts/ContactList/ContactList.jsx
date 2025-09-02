@@ -7,15 +7,31 @@ const ContactList = () => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [contactToDelete, setContactToDelete] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleDelete = async (id) => {
+  const handleDeleteClick = (contact) => {
+    setContactToDelete(contact);
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = async () => {
     try {
-      await deleteContact(id);
-      setContacts((prev) => prev.filter((c) => c.id !== id));
+      await deleteContact(contactToDelete.id);
+      setContacts((prev) => prev.filter((c) => c.id !== contactToDelete.id));
+      setShowDeleteModal(false);
+      setContactToDelete(null);
     } catch (err) {
       setError('Erro ao excluir contato');
       console.error(err);
+      setShowDeleteModal(false);
+      setContactToDelete(null);
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setShowDeleteModal(false);
+    setContactToDelete(null);
   };
 
   useEffect(() => {
@@ -63,6 +79,35 @@ const ContactList = () => {
 
   return (
     <div className="container mt-4">
+      {/* Modal de confirmação de exclusão */}
+      {showDeleteModal && contactToDelete && (
+        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirmar Exclusão</h5>
+                <button type="button" className="btn-close" onClick={handleDeleteCancel}></button>
+              </div>
+              <div className="modal-body">
+                <p>
+                  Tem certeza que deseja excluir o contato <strong>"{contactToDelete.nome}"</strong>?
+                  <br />
+                  <span className="text-muted">Esta ação não pode ser desfeita.</span>
+                </p>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={handleDeleteCancel}>
+                  Cancelar
+                </button>
+                <button type="button" className="btn btn-danger" onClick={handleDeleteConfirm}>
+                  Excluir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Lista de Contatos</h2>
         <div>
@@ -106,7 +151,7 @@ const ContactList = () => {
                       </Link>
                       <button
                         className="btn btn-outline-danger btn-sm"
-                        onClick={() => handleDelete(contact.id)}
+                        onClick={() => handleDeleteClick(contact)}
                         title="Remover"
                       >
                         <i className="bi bi-trash"></i>
@@ -154,7 +199,7 @@ const ContactList = () => {
                       </Link>
                       <button
                         className="btn btn-outline-danger btn-sm"
-                        onClick={() => handleDelete(contact.id)}
+                        onClick={() => handleDeleteClick(contact)}
                         title="Remover"
                       >
                         <i className="bi bi-trash"></i>

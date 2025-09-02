@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/agenda-contatos/static/css/main.297cdd0d.css",
+    "main.js": "/agenda-contatos/static/js/main.ead36d7f.js",
+    "static/js/453.9966b9b5.chunk.js": "/agenda-contatos/static/js/453.9966b9b5.chunk.js",
+    "static/media/bootstrap-icons.woff?": "/agenda-contatos/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
+    "static/media/bootstrap-icons.woff2?": "/agenda-contatos/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
+    "index.html": "/agenda-contatos/index.html",
+    "main.297cdd0d.css.map": "/agenda-contatos/static/css/main.297cdd0d.css.map",
+    "main.ead36d7f.js.map": "/agenda-contatos/static/js/main.ead36d7f.js.map",
+    "453.9966b9b5.chunk.js.map": "/agenda-contatos/static/js/453.9966b9b5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.297cdd0d.css",
+    "static/js/main.ead36d7f.js"
+  ]
+}

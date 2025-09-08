@@ -21,7 +21,19 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cy:open": "cypress open --e2e",
+    "cy:run": "cypress run --e2e",
+    "e2e:dev": "start-server-and-test start http://localhost:3000 \"cypress run --e2e\"",
+    "e2e:ui": "start-server-and-test start http://localhost:3000 \"cypress open --e2e\""
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "cypress/e2e/steps/**/*.js",
+      "cypress/support/step_definitions/**/*.js"
+    ],
+    "filterSpecs": true,
+    "omitFiltered": true
   },
   "eslintConfig": {
     "extends": [
@@ -44,11 +56,16 @@
   "devDependencies": {
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
+    "@badeball/cypress-cucumber-preprocessor": "^23.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "babel-jest": "^30.0.5",
+    "cypress": "^15.1.0",
+    "esbuild": "^0.25.9",
     "gh-pages": "^6.3.0",
-    "jest": "^30.0.5"
+    "jest": "^30.0.5",
+    "start-server-and-test": "^2.0.13"
   }
 }

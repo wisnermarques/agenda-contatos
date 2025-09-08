@@ -99,7 +99,7 @@ const ContactList = () => {
                 <button type="button" className="btn btn-secondary" onClick={handleDeleteCancel}>
                   Cancelar
                 </button>
-                <button type="button" className="btn btn-danger" onClick={handleDeleteConfirm}>
+                <button type="button" className="btn btn-danger" onClick={handleDeleteConfirm} data-testid="btn-confirmar-exclusao">
                   Excluir
                 </button>
               </div>
@@ -146,12 +146,14 @@ const ContactList = () => {
                         to={`/editar/${contact.id}`}
                         className="btn btn-outline-primary btn-sm"
                         title="Editar"
+                        data-testid={`btn-editar-${contact.id}`}
                       >
                         <i className="bi bi-pencil-square"></i>
                       </Link>
                       <button
                         className="btn btn-outline-danger btn-sm"
                         onClick={() => handleDeleteClick(contact)}
+                        data-testid={`btn-excluir-${contact.id}`}
                         title="Remover"
                       >
                         <i className="bi bi-trash"></i>
@@ -169,7 +171,7 @@ const ContactList = () => {
       <div className="d-lg-none">
         <div className="row g-3">
           {contacts.map((contact) => (
-            <div key={contact.id} className="col-12">
+            <div key={contact.id} data-testid={`contato-${contact.id}`} className="col-12">
               <div className="card shadow-sm">
                 <div className="card-body">
                   <div className="d-flex justify-content-between align-items-start">
@@ -192,6 +194,7 @@ const ContactList = () => {
                     <div className="d-flex gap-2">
                       <Link
                         to={`/editar/${contact.id}`}
+                        data-testid={`btn-editar-${contact.id}`}
                         className="btn btn-outline-primary btn-sm"
                         title="Editar"
                       >
@@ -199,6 +202,7 @@ const ContactList = () => {
                       </Link>
                       <button
                         className="btn btn-outline-danger btn-sm"
+                        data-testid={`btn-excluir-${contact.id}`}
                         onClick={() => handleDeleteClick(contact)}
                         title="Remover"
                       >

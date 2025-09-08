@@ -41,11 +41,16 @@ const ContactForm = ({ contact = {}, onSubmit }) => {
           type="text"
           id="nome"
           name="nome"
+          data-testid="input-nome"
           value={formData.nome}
           onChange={handleChange}
           className={`form-control ${errors.nome ? 'is-invalid' : ''}`}
         />
-        {errors.nome && <div className="invalid-feedback">{errors.nome}</div>}
+        {errors.nome && (
+          <div className="invalid-feedback" data-testid="error-nome">
+            {errors.nome}
+          </div>
+        )}
       </div>
 
       <div className="mb-3">
@@ -54,11 +59,16 @@ const ContactForm = ({ contact = {}, onSubmit }) => {
           type="email"
           id="email"
           name="email"
+          data-testid="input-email"
           value={formData.email}
           onChange={handleChange}
           className={`form-control ${errors.email ? 'is-invalid' : ''}`}
         />
-        {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+        {errors.email && (
+          <div className="invalid-feedback" data-testid="error-email">
+            {errors.email}
+          </div>
+        )}
       </div>
 
       <div className="mb-3">
@@ -67,15 +77,20 @@ const ContactForm = ({ contact = {}, onSubmit }) => {
           type="tel"
           id="telefone"
           name="telefone"
+          data-testid="input-telefone"
           value={formatPhone(formData.telefone)}
           onChange={handleChange}
           maxLength="15"
           className={`form-control ${errors.telefone ? 'is-invalid' : ''}`}
         />
-        {errors.telefone && <div className="invalid-feedback">{errors.telefone}</div>}
+        {errors.telefone && (
+          <div className="invalid-feedback" data-testid="error-telefone">
+            {errors.telefone}
+          </div>
+        )}
       </div>
 
-      <button type="submit" className="btn btn-dark w-100">Salvar</button>
+      <button type="submit" className="btn btn-dark w-100" data-testid="btn-salvar">Salvar</button>
     </form>
   );
 };
